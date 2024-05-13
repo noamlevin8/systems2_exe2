@@ -29,27 +29,27 @@ namespace ariel {
 
 
 
-        // Mathematical operators
-        friend Graph& operator+(Graph& g1, Graph& g2);
-        friend void operator+(Graph& g1);
-        friend Graph& operator-(Graph& g1, Graph& g2);
-        friend void operator-(Graph& g1);
-        friend Graph& operator+=(Graph& g1, Graph& g2);
-        friend Graph& operator-=(Graph& g1, Graph& g2);
+                // Mathematical operators
+                friend Graph& operator+(Graph& g1, Graph& g2);
+                friend void operator+(Graph& g1);
+                friend Graph& operator-(Graph& g1, Graph& g2);
+                friend void operator-(Graph& g1);
+                friend void operator+=(Graph& g1, Graph& g2);
+                friend void operator-=(Graph& g1, Graph& g2);
 
-        // Comperation operators
-        friend bool operator==(Graph& g1, Graph& g2);
-        friend bool operator!=(Graph& g1, Graph& g2);
-        friend bool operator>=(Graph& g1, Graph& g2);
-        friend bool operator>(Graph& g1, Graph& g2);
-        friend bool operator<=(Graph& g1, Graph& g2);
-        friend bool operator<(Graph& g1, Graph& g2);
+                // Comperation operators
+                friend bool operator==(Graph& g1, Graph& g2);
+                friend bool operator!=(Graph& g1, Graph& g2);
+                friend bool operator>=(Graph& g1, Graph& g2);
+                friend bool operator>(Graph& g1, Graph& g2);
+                friend bool operator<=(Graph& g1, Graph& g2);
+                friend bool operator<(Graph& g1, Graph& g2);
 
-        // Other operators
-        friend void operator++(Graph& g1);
-        friend void operator--(Graph& g1);
-        friend void operator*(Graph& g1, int num);
-        friend Graph& operator*(Graph& g1, Graph& g2);
-        friend ostream& operator<<(ostream& os, Graph& g1);
+                // Other operators
+                friend void operator++(Graph& g1);
+                friend void operator--(Graph& g1);
+                friend void operator*(Graph& g1, int num);
+                friend Graph& operator*(Graph& g1, Graph& g2);
+                friend ostream& operator<<(ostream& os, Graph& g1);
         };
 }

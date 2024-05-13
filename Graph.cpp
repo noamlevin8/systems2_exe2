@@ -81,7 +81,7 @@ int Graph::getIfDirected()
 // Mathematical operators
 
 //
-Graph& operator+(Graph& g1, Graph& g2)
+Graph& ariel::operator+(Graph& g1, Graph& g2)
 {
     size_t V1 = g1.getVertexNum();
     size_t V2 = g2.getVertexNum();
@@ -111,13 +111,13 @@ Graph& operator+(Graph& g1, Graph& g2)
 }
 
 //
-void operator+(Graph& g1)
+void ariel::operator+(Graph& g1)
 {
     return;
 }
 
 //
-Graph& operator-(Graph& g1, Graph& g2)
+Graph& ariel::operator-(Graph& g1, Graph& g2)
 {
     size_t V1 = g1.getVertexNum();
     size_t V2 = g2.getVertexNum();
@@ -147,7 +147,7 @@ Graph& operator-(Graph& g1, Graph& g2)
 }
 
 //
-void operator-(Graph& g1)
+void ariel::operator-(Graph& g1)
 {
     size_t i, j, V = g1.getVertexNum();
 
@@ -161,7 +161,7 @@ void operator-(Graph& g1)
 }
 
 //
-void operator+=(Graph& g1, Graph& g2)
+void ariel::operator+=(Graph& g1, Graph& g2)
 {
     size_t V1 = g1.getVertexNum();
     size_t V2 = g2.getVertexNum();
@@ -184,7 +184,7 @@ void operator+=(Graph& g1, Graph& g2)
 }
 
 //
-void operator-=(Graph& g1, Graph& g2)
+void ariel::operator-=(Graph& g1, Graph& g2)
 {
     size_t V1 = g1.getVertexNum();
     size_t V2 = g2.getVertexNum();
@@ -210,7 +210,7 @@ void operator-=(Graph& g1, Graph& g2)
 // Comperation operators
 
 //
-bool operator==(Graph& g1, Graph& g2)
+bool ariel::operator==(Graph& g1, Graph& g2)
 {
     size_t V1 = g1.getVertexNum();
     size_t V2 = g2.getVertexNum();
@@ -250,7 +250,7 @@ bool operator==(Graph& g1, Graph& g2)
 }
 
 //
-bool operator!=(Graph& g1, Graph& g2)
+bool ariel::operator!=(Graph& g1, Graph& g2)
 {
     if(!(g1 == g2))
         return true;
@@ -259,7 +259,7 @@ bool operator!=(Graph& g1, Graph& g2)
 }
 
 //
-bool operator>=(Graph& g1, Graph& g2)
+bool ariel::operator>=(Graph& g1, Graph& g2)
 {
     if(g1 == g2 || g1 > g2)
         return true;
@@ -268,7 +268,7 @@ bool operator>=(Graph& g1, Graph& g2)
 }
 
 //
-bool operator>(Graph& g1, Graph& g2)
+bool ariel::operator>(Graph& g1, Graph& g2)
 {
     if(g1 == g2)
         return false;
@@ -287,7 +287,7 @@ bool operator>(Graph& g1, Graph& g2)
 }
 
 //
-bool operator<=(Graph& g1, Graph& g2)
+bool ariel::operator<=(Graph& g1, Graph& g2)
 {
     if(g1 == g2 || g1 < g2)
         return true;
@@ -296,7 +296,7 @@ bool operator<=(Graph& g1, Graph& g2)
 }
 
 //
-bool operator<(Graph& g1, Graph& g2)
+bool ariel::operator<(Graph& g1, Graph& g2)
 {
     if(g1 == g2)
         return false;
@@ -318,7 +318,7 @@ bool operator<(Graph& g1, Graph& g2)
 // Other operators
 
 //
-void operator++(Graph& g1)
+void ariel::operator++(Graph& g1)
 {
     size_t i, j, V = g1.getVertexNum();
 
@@ -332,7 +332,7 @@ void operator++(Graph& g1)
 }
 
 //
-void operator--(Graph& g1)
+void ariel::operator--(Graph& g1)
 {
     size_t i, j, V = g1.getVertexNum();
 
@@ -346,7 +346,7 @@ void operator--(Graph& g1)
 }
 
 //
-void operator*(Graph& g1, int num)
+void ariel::operator*(Graph& g1, int num)
 {
     size_t i, j, V = g1.getVertexNum();
 
@@ -360,7 +360,7 @@ void operator*(Graph& g1, int num)
 }
 
 //
-Graph& operator*(Graph& g1, Graph& g2)
+Graph& ariel::operator*(Graph& g1, Graph& g2)
 {
     size_t V1 = g1.getVertexNum();
     size_t V2 = g2.getVertexNum();
@@ -396,7 +396,7 @@ Graph& operator*(Graph& g1, Graph& g2)
 }
 
 //
-ostream& operator<<(ostream& os, Graph& g1)
+ostream& ariel::operator<<(ostream& os, Graph& g1)
 {
     size_t i, j, V = g1.getVertexNum();
 
