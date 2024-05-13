@@ -50,7 +50,7 @@ void Graph::loadGraph(vector<vector<int>> new_graph, int directed = 0) { // If w
 
 // Prints the number of vertices and the number of edges
 void Graph::printGraph() {
-        cout << "Graph with " << vertex_num << " vertices and " << edge_num << " edges." << endl;
+    cout << "Graph with " << vertex_num << " vertices and " << edge_num << " edges." << endl;
 }
 
 // Returns the adjacency matrix
@@ -75,4 +75,344 @@ size_t Graph::getEdgeNum()
 int Graph::getIfDirected()
 {
     return if_directed;
+}
+
+
+// Mathematical operators
+
+//
+Graph& operator+(Graph& g1, Graph& g2)
+{
+    size_t V1 = g1.getVertexNum();
+    size_t V2 = g2.getVertexNum();
+
+    if(V1 != V2)
+        throw invalid_argument("Invalid graphs: The graphs are not from the same size.");
+
+    if(g1.getIfDirected() != g2.getIfDirected())
+        throw invalid_argument("Invalid graphs: The graphs are not both directed/undirected.");  
+
+    vector<vector<int>> new_graph(V1, vector<int>(V1, 0));
+
+    size_t i, j;
+
+    for(i = 0; i < V1; i++)
+    {
+        for(j = 0; j < V1; j++)
+        {
+            new_graph[i][j] = g1.getGraph()[i][j] + g2.getGraph()[i][j];
+        }
+    }
+
+    Graph g3;
+    g3.loadGraph(new_graph, g1.getIfDirected());
+
+    return g3;
+}
+
+//
+void operator+(Graph& g1)
+{
+    return;
+}
+
+//
+Graph& operator-(Graph& g1, Graph& g2)
+{
+    size_t V1 = g1.getVertexNum();
+    size_t V2 = g2.getVertexNum();
+
+    if(V1 != V2)
+        throw invalid_argument("Invalid graphs: The graphs are not from the same size.");
+    
+    if(g1.getIfDirected() != g2.getIfDirected())
+        throw invalid_argument("Invalid graphs: The graphs are not both directed/undirected.");  
+
+    vector<vector<int>> new_graph(V1, vector<int>(V1, 0));
+
+    size_t i, j;
+
+    for(i = 0; i < V1; i++)
+    {
+        for(j = 0; j < V1; j++)
+        {
+            new_graph[i][j] = g1.getGraph()[i][j] - g2.getGraph()[i][j];
+        }
+    }
+
+    Graph g3;
+    g3.loadGraph(new_graph, g1.getIfDirected());
+
+    return g3;
+}
+
+//
+void operator-(Graph& g1)
+{
+    size_t i, j, V = g1.getVertexNum();
+
+    for(i = 0; i < V; i++)
+    {
+        for(j = 0; j < V; j++)
+        {
+            g1.getGraph()[i][j] *= -1;
+        }
+    }
+}
+
+//
+void operator+=(Graph& g1, Graph& g2)
+{
+    size_t V1 = g1.getVertexNum();
+    size_t V2 = g2.getVertexNum();
+
+    if(V1 != V2)
+        throw invalid_argument("Invalid graphs: The graphs are not from the same size.");
+
+    if(g1.getIfDirected() != g2.getIfDirected())
+        throw invalid_argument("Invalid graphs: The graphs are not both directed/undirected.");  
+
+    size_t i, j;
+
+    for(i = 0; i < V1; i++)
+    {
+        for(j = 0; j < V1; j++)
+        {
+            g1.getGraph()[i][j] += g2.getGraph()[i][j];
+        }
+    }
+}
+
+//
+void operator-=(Graph& g1, Graph& g2)
+{
+    size_t V1 = g1.getVertexNum();
+    size_t V2 = g2.getVertexNum();
+
+    if(V1 != V2)
+        throw invalid_argument("Invalid graphs: The graphs are not from the same size.");
+
+    if(g1.getIfDirected() != g2.getIfDirected())
+        throw invalid_argument("Invalid graphs: The graphs are not both directed/undirected.");  
+
+    size_t i, j;
+
+    for(i = 0; i < V1; i++)
+    {
+        for(j = 0; j < V1; j++)
+        {
+            g1.getGraph()[i][j] -= g2.getGraph()[i][j];
+        }
+    }
+}
+
+
+// Comperation operators
+
+//
+bool operator==(Graph& g1, Graph& g2)
+{
+    size_t V1 = g1.getVertexNum();
+    size_t V2 = g2.getVertexNum();
+
+    if(g1.getIfDirected() != g2.getIfDirected())
+        throw invalid_argument("Invalid graphs: The graphs are not both directed/undirected.");  
+
+    size_t i, j;
+
+    if(V1 == V2)
+    {
+        bool flag = true;
+
+        for(i = 0; i < V1; i++)
+        {
+            for(j = 0; j < V1; j++)
+            {
+                if(g1.getGraph()[i][j] != g2.getGraph()[i][j])
+                {
+                    flag = false;
+                    break;
+                }
+            }
+
+            if(!flag)
+                break;
+        }
+
+        if(flag)
+            return true;
+    }
+
+    if(!(g1 > g2) && !(g2 > g1))
+        return true;
+
+    return false;
+}
+
+//
+bool operator!=(Graph& g1, Graph& g2)
+{
+    if(!(g1 == g2))
+        return true;
+
+    return false;
+}
+
+//
+bool operator>=(Graph& g1, Graph& g2)
+{
+    if(g1 == g2 || g1 > g2)
+        return true;
+    
+    return false;
+}
+
+//
+bool operator>(Graph& g1, Graph& g2)
+{
+    if(g1 == g2)
+        return false;
+
+    if(g1.getEdgeNum() > g2.getEdgeNum())
+        return true;
+
+    if(g1.getEdgeNum() < g2.getEdgeNum())
+        return false;
+
+    if(g1.getVertexNum() > g2.getVertexNum())
+        return true;
+
+    if(g1.getVertexNum() < g2.getVertexNum())
+        return false;
+}
+
+//
+bool operator<=(Graph& g1, Graph& g2)
+{
+    if(g1 == g2 || g1 < g2)
+        return true;
+
+    return false;
+}
+
+//
+bool operator<(Graph& g1, Graph& g2)
+{
+    if(g1 == g2)
+        return false;
+
+    if(g1.getEdgeNum() < g2.getEdgeNum())
+        return true;
+
+    if(g1.getEdgeNum() > g2.getEdgeNum())
+        return false;
+
+    if(g1.getVertexNum() < g2.getVertexNum())
+        return true;
+
+    if(g1.getVertexNum() > g2.getVertexNum())
+        return false;
+}
+
+
+// Other operators
+
+//
+void operator++(Graph& g1)
+{
+    size_t i, j, V = g1.getVertexNum();
+
+    for(i = 0; i < V; i++)
+    {
+        for(j = 0; j < V; j++)
+        {
+            g1.getGraph()[i][j]++;
+        }
+    }
+}
+
+//
+void operator--(Graph& g1)
+{
+    size_t i, j, V = g1.getVertexNum();
+
+    for(i = 0; i < V; i++)
+    {
+        for(j = 0; j < V; j++)
+        {
+            g1.getGraph()[i][j]--;
+        }
+    }
+}
+
+//
+void operator*(Graph& g1, int num)
+{
+    size_t i, j, V = g1.getVertexNum();
+
+    for(i = 0; i < V; i++)
+    {
+        for(j = 0; j < V; j++)
+        {
+            g1.getGraph()[i][j] *= num;
+        }
+    }
+}
+
+//
+Graph& operator*(Graph& g1, Graph& g2)
+{
+    size_t V1 = g1.getVertexNum();
+    size_t V2 = g2.getVertexNum();
+
+    if(V1 != V2)
+        throw invalid_argument("Invalid graphs: The graphs are not from the same size.");
+
+    if(g1.getIfDirected() != g2.getIfDirected())
+        throw invalid_argument("Invalid graphs: The graphs are not both directed/undirected.");  
+
+    vector<vector<int>> new_graph(V1, vector<int>(V1, 0));
+
+    size_t i, j;
+
+    for (i = 0; i < V1; i++) 
+    {
+        for (j = 0; j < V1; j++) 
+        {
+            if(i == j)
+                continue;
+
+            for (int k = 0; k < V1; k++) 
+            {
+                new_graph[i][j] += g1.getGraph()[i][k] * g2.getGraph()[k][j];
+            }
+         }
+    }
+
+    Graph g3;
+    g3.loadGraph(new_graph, g1.getIfDirected());
+
+    return g3;
+}
+
+//
+ostream& operator<<(ostream& os, Graph& g1)
+{
+    size_t i, j, V = g1.getVertexNum();
+
+    for (i = 0; i < V; ++i) 
+    { 
+        os << "[";
+
+        for(j = 0; j < V; j++)
+        {
+            os << g1.getGraph()[i][j];
+            
+            if(j < V-1)
+                os << ", ";
+        }
+        os << "]\n";
+    }
+
+    return os; 
 }

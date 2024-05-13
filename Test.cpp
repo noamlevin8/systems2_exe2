@@ -12,13 +12,16 @@ TEST_CASE("Test graph addition")
         {1, 0, 1},
         {0, 1, 0}};
     g1.loadGraph(graph, 0);
+    
     ariel::Graph g2;
     vector<vector<int>> weightedGraph = {
         {0, 1, 1},
         {1, 0, 2},
         {1, 2, 0}};
     g2.loadGraph(weightedGraph, 0);
+
     ariel::Graph g3 = g1 + g2;
+
     vector<vector<int>> expectedGraph = {
         {0, 2, 1},
         {2, 0, 3},
@@ -34,13 +37,16 @@ TEST_CASE("Test graph multiplication")
         {1, 0, 1},
         {0, 1, 0}};
     g1.loadGraph(graph, 0);
+
     ariel::Graph g2;
     vector<vector<int>> weightedGraph = {
         {0, 1, 1},
         {1, 0, 2},
         {1, 2, 0}};
     g2.loadGraph(weightedGraph, 0);
+
     ariel::Graph g4 = g1 * g2;
+
     vector<vector<int>> expectedGraph = {
         {0, 0, 2},
         {1, 0, 1},
@@ -56,12 +62,14 @@ TEST_CASE("Invalid operations")
         {1, 0, 1},
         {0, 1, 0}};
     g1.loadGraph(graph, 0);
+
     ariel::Graph g2;
     vector<vector<int>> weightedGraph = {
         {0, 1, 1, 1},
         {1, 0, 2, 1},
         {1, 2, 0, 1}};
     g2.loadGraph(weightedGraph, 0);
+
     ariel::Graph g5;
     vector<vector<int>> graph2 = {
         {0, 1, 0, 0, 1},
