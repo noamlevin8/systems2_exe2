@@ -49,8 +49,27 @@ void Graph::loadGraph(vector<vector<int>> new_graph, int directed = 0) { // If w
 }
 
 // Prints the number of vertices and the number of edges
-void Graph::printGraph() {
-    cout << "Graph with " << vertex_num << " vertices and " << edge_num << " edges." << endl;
+string Graph::printGraph() {
+
+    size_t i, j, V = vertex_num;
+    string result = "";
+
+    for (i = 0; i < V; ++i) 
+    { 
+        result += "[";
+
+        for(j = 0; j < V; j++)
+        {
+            result += to_string(graph[i][j]);
+            
+            if(j < V-1)
+                result += ", ";
+        }
+        if(i < V-1)
+            result += "]\n";
+    }
+
+    return result + "]";    
 }
 
 // Returns the adjacency matrix
@@ -83,13 +102,13 @@ int Graph::getIfDirected()
 //
 Graph& ariel::operator+(Graph& g1, Graph& g2)
 {
-    size_t V1 = g1.getVertexNum();
-    size_t V2 = g2.getVertexNum();
+    size_t V1 = g1.vertex_num;
+    size_t V2 = g2.vertex_num;
 
     if(V1 != V2)
         throw invalid_argument("Invalid graphs: The graphs are not from the same size.");
 
-    if(g1.getIfDirected() != g2.getIfDirected())
+    if(g1.if_directed != g2.if_directed)
         throw invalid_argument("Invalid graphs: The graphs are not both directed/undirected.");  
 
     vector<vector<int>> new_graph(V1, vector<int>(V1, 0));
@@ -100,12 +119,12 @@ Graph& ariel::operator+(Graph& g1, Graph& g2)
     {
         for(j = 0; j < V1; j++)
         {
-            new_graph[i][j] = g1.getGraph()[i][j] + g2.getGraph()[i][j];
+            new_graph[i][j] = g1.graph[i][j] + g2.graph[i][j];
         }
     }
 
-    Graph g3;
-    g3.loadGraph(new_graph, g1.getIfDirected());
+    static Graph g3;
+    g3.loadGraph(new_graph, g1.if_directed);
 
     return g3;
 }
@@ -119,13 +138,13 @@ void ariel::operator+(Graph& g1)
 //
 Graph& ariel::operator-(Graph& g1, Graph& g2)
 {
-    size_t V1 = g1.getVertexNum();
-    size_t V2 = g2.getVertexNum();
+    size_t V1 = g1.vertex_num;
+    size_t V2 = g2.vertex_num;
 
     if(V1 != V2)
         throw invalid_argument("Invalid graphs: The graphs are not from the same size.");
     
-    if(g1.getIfDirected() != g2.getIfDirected())
+    if(g1.if_directed != g2.if_directed)
         throw invalid_argument("Invalid graphs: The graphs are not both directed/undirected.");  
 
     vector<vector<int>> new_graph(V1, vector<int>(V1, 0));
@@ -136,12 +155,12 @@ Graph& ariel::operator-(Graph& g1, Graph& g2)
     {
         for(j = 0; j < V1; j++)
         {
-            new_graph[i][j] = g1.getGraph()[i][j] - g2.getGraph()[i][j];
+            new_graph[i][j] = g1.graph[i][j] - g2.graph[i][j];
         }
     }
 
-    Graph g3;
-    g3.loadGraph(new_graph, g1.getIfDirected());
+    static Graph g3;
+    g3.loadGraph(new_graph, g1.if_directed);
 
     return g3;
 }
@@ -149,13 +168,13 @@ Graph& ariel::operator-(Graph& g1, Graph& g2)
 //
 void ariel::operator-(Graph& g1)
 {
-    size_t i, j, V = g1.getVertexNum();
+    size_t i, j, V = g1.vertex_num;
 
     for(i = 0; i < V; i++)
     {
         for(j = 0; j < V; j++)
         {
-            g1.getGraph()[i][j] *= -1;
+            g1.graph[i][j] *= -1;
         }
     }
 }
@@ -163,13 +182,13 @@ void ariel::operator-(Graph& g1)
 //
 void ariel::operator+=(Graph& g1, Graph& g2)
 {
-    size_t V1 = g1.getVertexNum();
-    size_t V2 = g2.getVertexNum();
+    size_t V1 = g1.vertex_num;
+    size_t V2 = g2.vertex_num;
 
     if(V1 != V2)
         throw invalid_argument("Invalid graphs: The graphs are not from the same size.");
 
-    if(g1.getIfDirected() != g2.getIfDirected())
+    if(g1.if_directed != g2.if_directed)
         throw invalid_argument("Invalid graphs: The graphs are not both directed/undirected.");  
 
     size_t i, j;
@@ -178,7 +197,7 @@ void ariel::operator+=(Graph& g1, Graph& g2)
     {
         for(j = 0; j < V1; j++)
         {
-            g1.getGraph()[i][j] += g2.getGraph()[i][j];
+            g1.graph[i][j] += g2.graph[i][j];
         }
     }
 }
@@ -186,13 +205,13 @@ void ariel::operator+=(Graph& g1, Graph& g2)
 //
 void ariel::operator-=(Graph& g1, Graph& g2)
 {
-    size_t V1 = g1.getVertexNum();
-    size_t V2 = g2.getVertexNum();
+    size_t V1 = g1.vertex_num;
+    size_t V2 = g2.vertex_num;
 
     if(V1 != V2)
         throw invalid_argument("Invalid graphs: The graphs are not from the same size.");
 
-    if(g1.getIfDirected() != g2.getIfDirected())
+    if(g1.if_directed != g2.if_directed)
         throw invalid_argument("Invalid graphs: The graphs are not both directed/undirected.");  
 
     size_t i, j;
@@ -201,7 +220,7 @@ void ariel::operator-=(Graph& g1, Graph& g2)
     {
         for(j = 0; j < V1; j++)
         {
-            g1.getGraph()[i][j] -= g2.getGraph()[i][j];
+            g1.graph[i][j] -= g2.graph[i][j];
         }
     }
 }
@@ -212,10 +231,10 @@ void ariel::operator-=(Graph& g1, Graph& g2)
 //
 bool ariel::operator==(Graph& g1, Graph& g2)
 {
-    size_t V1 = g1.getVertexNum();
-    size_t V2 = g2.getVertexNum();
+    size_t V1 = g1.vertex_num;
+    size_t V2 = g2.vertex_num;
 
-    if(g1.getIfDirected() != g2.getIfDirected())
+    if(g1.if_directed != g2.if_directed)
         throw invalid_argument("Invalid graphs: The graphs are not both directed/undirected.");  
 
     size_t i, j;
@@ -228,7 +247,7 @@ bool ariel::operator==(Graph& g1, Graph& g2)
         {
             for(j = 0; j < V1; j++)
             {
-                if(g1.getGraph()[i][j] != g2.getGraph()[i][j])
+                if(g1.graph[i][j] != g2.graph[i][j])
                 {
                     flag = false;
                     break;
@@ -270,20 +289,46 @@ bool ariel::operator>=(Graph& g1, Graph& g2)
 //
 bool ariel::operator>(Graph& g1, Graph& g2)
 {
-    if(g1 == g2)
+    size_t V1 = g1.vertex_num;
+    size_t V2 = g2.vertex_num;
+
+    if(V1 <= V2)
+        return false;
+    
+    size_t i, j;
+    size_t count_i = 0, count_j = 0;
+
+    for(i = 0; i < V1; i++)
+    {
+        if(i + V2 > V1)
+            break;
+
+        for(j = 0; j < V1; j++)
+        {
+            if(j + V2 > V1)
+                break;
+
+            if(g2.graph[count_i][count_j] == g1.graph[i][j])
+            {
+                if(count_i == V2 && count_j == V2)
+                    return true;
+                
+                count_i++;
+                count_j++;
+            }
+
+            else
+            {
+                count_i = 0;
+                count_j = 0;
+            }
+        }
+    }
+
+    if(g1.edge_num < g2.edge_num)
         return false;
 
-    if(g1.getEdgeNum() > g2.getEdgeNum())
-        return true;
-
-    if(g1.getEdgeNum() < g2.getEdgeNum())
-        return false;
-
-    if(g1.getVertexNum() > g2.getVertexNum())
-        return true;
-
-    if(g1.getVertexNum() < g2.getVertexNum())
-        return false;
+    return true;
 }
 
 //
@@ -298,20 +343,46 @@ bool ariel::operator<=(Graph& g1, Graph& g2)
 //
 bool ariel::operator<(Graph& g1, Graph& g2)
 {
-    if(g1 == g2)
+    size_t V1 = g1.vertex_num;
+    size_t V2 = g2.vertex_num;
+
+    if(V1 >= V2)
+        return false;
+    
+    size_t i, j;
+    size_t count_i = 0, count_j = 0;
+
+    for(i = 0; i < V2; i++)
+    {
+        if(i + V1 > V2)
+            break;
+
+        for(j = 0; j < V2; j++)
+        {
+            if(j + V1 > V2)
+                break;
+
+            if(g1.graph[count_i][count_j] == g2.graph[i][j])
+            {
+                if(count_i == V1 && count_j == V1)
+                    return true;
+                
+                count_i++;
+                count_j++;
+            }
+
+            else
+            {
+                count_i = 0;
+                count_j = 0;
+            }
+        }
+    }
+
+    if(g1.edge_num > g2.edge_num)
         return false;
 
-    if(g1.getEdgeNum() < g2.getEdgeNum())
-        return true;
-
-    if(g1.getEdgeNum() > g2.getEdgeNum())
-        return false;
-
-    if(g1.getVertexNum() < g2.getVertexNum())
-        return true;
-
-    if(g1.getVertexNum() > g2.getVertexNum())
-        return false;
+    return true;
 }
 
 
@@ -320,13 +391,13 @@ bool ariel::operator<(Graph& g1, Graph& g2)
 //
 void ariel::operator++(Graph& g1)
 {
-    size_t i, j, V = g1.getVertexNum();
+    size_t i, j, V = g1.vertex_num;
 
     for(i = 0; i < V; i++)
     {
         for(j = 0; j < V; j++)
         {
-            g1.getGraph()[i][j]++;
+            g1.graph[i][j]++;
         }
     }
 }
@@ -334,13 +405,13 @@ void ariel::operator++(Graph& g1)
 //
 void ariel::operator--(Graph& g1)
 {
-    size_t i, j, V = g1.getVertexNum();
+    size_t i, j, V = g1.vertex_num;
 
     for(i = 0; i < V; i++)
     {
         for(j = 0; j < V; j++)
         {
-            g1.getGraph()[i][j]--;
+            g1.graph[i][j]--;
         }
     }
 }
@@ -348,13 +419,13 @@ void ariel::operator--(Graph& g1)
 //
 void ariel::operator*(Graph& g1, int num)
 {
-    size_t i, j, V = g1.getVertexNum();
+    size_t i, j, V = g1.vertex_num;
 
     for(i = 0; i < V; i++)
     {
         for(j = 0; j < V; j++)
         {
-            g1.getGraph()[i][j] *= num;
+            g1.graph[i][j] *= num;
         }
     }
 }
@@ -362,18 +433,18 @@ void ariel::operator*(Graph& g1, int num)
 //
 Graph& ariel::operator*(Graph& g1, Graph& g2)
 {
-    size_t V1 = g1.getVertexNum();
-    size_t V2 = g2.getVertexNum();
+    size_t V1 = g1.vertex_num;
+    size_t V2 = g2.vertex_num;
 
     if(V1 != V2)
         throw invalid_argument("Invalid graphs: The graphs are not from the same size.");
 
-    if(g1.getIfDirected() != g2.getIfDirected())
+    if(g1.if_directed != g2.if_directed)
         throw invalid_argument("Invalid graphs: The graphs are not both directed/undirected.");  
 
     vector<vector<int>> new_graph(V1, vector<int>(V1, 0));
 
-    size_t i, j;
+    size_t i, j, k;
 
     for (i = 0; i < V1; i++) 
     {
@@ -382,15 +453,15 @@ Graph& ariel::operator*(Graph& g1, Graph& g2)
             if(i == j)
                 continue;
 
-            for (int k = 0; k < V1; k++) 
+            for (k = 0; k < V1; k++) 
             {
-                new_graph[i][j] += g1.getGraph()[i][k] * g2.getGraph()[k][j];
+                new_graph[i][j] += g1.graph[i][k] * g2.graph[k][j];
             }
          }
     }
 
-    Graph g3;
-    g3.loadGraph(new_graph, g1.getIfDirected());
+    static Graph g3;
+    g3.loadGraph(new_graph, 1); // Directed because multiplication doesn't necessarily maintain the symmetricity
 
     return g3;
 }
@@ -398,7 +469,7 @@ Graph& ariel::operator*(Graph& g1, Graph& g2)
 //
 ostream& ariel::operator<<(ostream& os, Graph& g1)
 {
-    size_t i, j, V = g1.getVertexNum();
+    size_t i, j, V = g1.vertex_num;
 
     for (i = 0; i < V; ++i) 
     { 
@@ -406,7 +477,7 @@ ostream& ariel::operator<<(ostream& os, Graph& g1)
 
         for(j = 0; j < V; j++)
         {
-            os << g1.getGraph()[i][j];
+            os << g1.graph[i][j];
             
             if(j < V-1)
                 os << ", ";

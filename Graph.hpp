@@ -20,7 +20,7 @@ namespace ariel {
 
         public:
                 void loadGraph(vector<vector<int>> graph, int directed); // Loading the graph to our object
-                void printGraph(); // Prints the number of vertices and the number of edges
+                string printGraph(); // Returns a string representing the adjacency matrix (Change from exe1)
 
                 vector<vector<int>> getGraph(); // Returns the adjacency matrix
                 size_t getVertexNum(); // Returns the number of vertecis in the graph
