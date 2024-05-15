@@ -407,7 +407,8 @@ void ariel::operator++(Graph& g1)
     {
         for(j = 0; j < V; j++)
         {
-            g1.graph[i][j]++;
+            if(i != j)
+                g1.graph[i][j]++;
         }
     }
 }
@@ -421,7 +422,8 @@ void ariel::operator--(Graph& g1)
     {
         for(j = 0; j < V; j++)
         {
-            g1.graph[i][j]--;
+            if(i != j)
+                g1.graph[i][j]--;
         }
     }
 }

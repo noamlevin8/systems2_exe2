@@ -270,29 +270,114 @@ TEST_CASE("Test >/< and >=/<=")
     CHECK(g7 > g8);
 }
 
-TEST_CASE("Test graph multiplication")
+TEST_CASE("Test ++ and --")
 {
+    // Undirected
+
     ariel::Graph g1;
-    vector<vector<int>> graph = {
+    vector<vector<int>> graph1 = {
         {0, 1, 0},
         {1, 0, 1},
         {0, 1, 0}};
-    g1.loadGraph(graph, 0);
+    g1.loadGraph(graph1, 0);
+
+    ++g1;
+    CHECK(g1.printGraph() == "[0, 2, 1]\n[2, 0, 2]\n[1, 2, 0]");
+
+    --g1;
+    CHECK(g1.printGraph() == "[0, 1, 0]\n[1, 0, 1]\n[0, 1, 0]");
+
+
+    // Directed
 
     ariel::Graph g2;
-    vector<vector<int>> weightedGraph = {
+    vector<vector<int>> graph2 = {
+        {0, 1, 0},
+        {-4, 0, 2},
+        {3, 0, 0}};
+    g2.loadGraph(graph2, 1);
+
+    ++g2;
+    CHECK(g2.printGraph() == "[0, 2, 1]\n[-3, 0, 3]\n[4, 1, 0]");
+
+    --g2;
+    CHECK(g2.printGraph() == "[0, 1, 0]\n[-4, 0, 2]\n[3, 0, 0]");
+}
+
+TEST_CASE("Test graph multiplication")
+{
+    // Undirected
+
+    ariel::Graph g1;
+    vector<vector<int>> graph1 = {
+        {0, 1, 0},
+        {1, 0, 1},
+        {0, 1, 0}};
+    g1.loadGraph(graph1, 0);
+
+    ariel::Graph g2;
+    vector<vector<int>> graph2 = {
         {0, 1, 1},
         {1, 0, 2},
         {1, 2, 0}};
-    g2.loadGraph(weightedGraph, 0);
+    g2.loadGraph(graph2, 0);
 
-    ariel::Graph g4 = g1 * g2;
+    ariel::Graph g3 = g1 * g2;
 
     vector<vector<int>> expectedGraph = {
         {0, 0, 2},
         {1, 0, 1},
         {1, 0, 0}};
-    CHECK(g4.printGraph() == "[0, 0, 2]\n[1, 0, 1]\n[1, 0, 0]");
+    CHECK(g3.printGraph() == "[0, 0, 2]\n[1, 0, 1]\n[1, 0, 0]");
+
+    g1 * 2;
+    CHECK(g1.printGraph() == "[0, 2, 0]\n[2, 0, 2]\n[0, 2, 0]");
+
+
+    // Directed
+
+    ariel::Graph g4;
+    vector<vector<int>> graph4 = {
+        {0, 0, -3},
+        {-1, 0, 4},
+        {0, 5, 0}};
+    g4.loadGraph(graph4, 1);
+
+    ariel::Graph g5;
+    vector<vector<int>> graph5 = {
+        {0, 1, 0},
+        {0, 0, 2},
+        {2, 1, 0}};
+    g5.loadGraph(graph5, 1);
+    
+    ariel::Graph g6 = g4 * g5;
+
+    CHECK(g6.printGraph() == "[0, -3, 0]\n[8, 0, 0]\n[0, 0, 0]");
+
+    g4 * -3;
+    CHECK(g4.printGraph() == "[0, 0, 9]\n[3, 0, -12]\n[0, -15, 0]");
+}
+
+TEST_CASE("Test print")
+{
+    ariel::Graph g1;
+    vector<vector<int>> graph1 = {
+        {0, 1, 0},
+        {1, 0, 1},
+        {0, 1, 0}};
+    g1.loadGraph(graph1, 0);
+
+    ariel::Graph g2;
+    vector<vector<int>> graph2 = {
+        {0, -5, 3},
+        {1, 0, 0},
+        {0, -3, 0}};
+    g2.loadGraph(graph2, 1);
+
+    // Works
+    cout << g1;
+    cout << endl;
+    cout << g2;
 }
 
 // TEST_CASE("Invalid operations")
