@@ -271,10 +271,10 @@ bool ariel::operator==(Graph& g1, Graph& g2)
 //
 bool ariel::operator!=(Graph& g1, Graph& g2)
 {
-    if(!(g1 == g2))
-        return true;
+    if(g1 == g2)
+        return false;
 
-    return false;
+    return true;
 }
 
 //
@@ -291,44 +291,49 @@ bool ariel::operator>(Graph& g1, Graph& g2)
 {
     size_t V1 = g1.vertex_num;
     size_t V2 = g2.vertex_num;
-
-    if(V1 <= V2)
-        return false;
-    
     size_t i, j;
     size_t count_i = 0, count_j = 0;
 
-    for(i = 0; i < V1; i++)
+    if(V1 != V2)
     {
-        if(i + V2 > V1)
-            break;
-
-        for(j = 0; j < V1; j++)
+        for(i = 0; i < V1; i++)
         {
-            if(j + V2 > V1)
+            if(i + V2 > V1)
                 break;
 
-            if(g2.graph[count_i][count_j] == g1.graph[i][j])
+            for(j = 0; j < V1; j++)
             {
-                if(count_i == V2 && count_j == V2)
-                    return true;
-                
-                count_i++;
-                count_j++;
-            }
+                if(j + V2 > V1)
+                    break;
 
-            else
-            {
-                count_i = 0;
-                count_j = 0;
+                if(g2.graph[count_i][count_j] == g1.graph[i][j])
+                {
+                    if(count_i == V2 && count_j == V2)
+                        return true;
+                    
+                    count_i++;
+                    count_j++;
+                }
+
+                else
+                {
+                    count_i = 0;
+                    count_j = 0;
+                }
             }
         }
     }
 
+    if(g1.edge_num > g2.edge_num)
+        return true;
+
     if(g1.edge_num < g2.edge_num)
         return false;
 
-    return true;
+    if(g1.vertex_num > g2.vertex_num)
+        return true;
+
+    return false;
 }
 
 //
@@ -345,44 +350,49 @@ bool ariel::operator<(Graph& g1, Graph& g2)
 {
     size_t V1 = g1.vertex_num;
     size_t V2 = g2.vertex_num;
-
-    if(V1 >= V2)
-        return false;
-    
     size_t i, j;
     size_t count_i = 0, count_j = 0;
 
-    for(i = 0; i < V2; i++)
+    if(V1 != V2)
     {
-        if(i + V1 > V2)
-            break;
-
-        for(j = 0; j < V2; j++)
+        for(i = 0; i < V2; i++)
         {
-            if(j + V1 > V2)
+            if(i + V1 > V2)
                 break;
 
-            if(g1.graph[count_i][count_j] == g2.graph[i][j])
+            for(j = 0; j < V2; j++)
             {
-                if(count_i == V1 && count_j == V1)
-                    return true;
-                
-                count_i++;
-                count_j++;
-            }
+                if(j + V1 > V2)
+                    break;
 
-            else
-            {
-                count_i = 0;
-                count_j = 0;
+                if(g1.graph[count_i][count_j] == g2.graph[i][j])
+                {
+                    if(count_i == V1 && count_j == V1)
+                        return true;
+                    
+                    count_i++;
+                    count_j++;
+                }
+
+                else
+                {
+                    count_i = 0;
+                    count_j = 0;
+                }
             }
         }
     }
 
+    if(g1.edge_num < g2.edge_num)
+        return true;
+
     if(g1.edge_num > g2.edge_num)
         return false;
 
-    return true;
+    if(g1.vertex_num < g2.vertex_num)
+        return true;
+
+    return false;
 }
 
 
