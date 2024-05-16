@@ -264,7 +264,7 @@ bool ariel::operator==(Graph& g1, Graph& g2)
 
     if(!(g1 > g2) && !(g2 > g1))
         return true;
-
+    
     return false;
 }
 
@@ -293,17 +293,21 @@ bool ariel::operator>(Graph& g1, Graph& g2)
     size_t V2 = g2.vertex_num;
     size_t i, j;
     size_t count_i = 0, count_j = 0;
+    bool flag;
+
+    if(g1.if_directed != g2.if_directed)
+        throw invalid_argument("Invalid graphs: The graphs are not both directed/undirected.");  
 
     if(V1 != V2)
     {
         for(i = 0; i < V1; i++)
         {
-            if(i + V2 > V1)
+            if(count_i + V2 > V1)
                 break;
 
             for(j = 0; j < V1; j++)
             {
-                if(j + V2 > V1)
+                if(count_j + V2 > V1)
                     break;
 
                 if(g2.graph[count_i][count_j] == g1.graph[i][j])
@@ -311,15 +315,22 @@ bool ariel::operator>(Graph& g1, Graph& g2)
                     if(count_i == V2 && count_j == V2)
                         return true;
                     
-                    count_i++;
                     count_j++;
+                    flag = true;
                 }
 
                 else
                 {
                     count_i = 0;
                     count_j = 0;
+                    flag = false;
                 }
+            }
+
+            if(flag)
+            {
+                count_i++;
+                count_j = 0;
             }
         }
     }
@@ -352,17 +363,21 @@ bool ariel::operator<(Graph& g1, Graph& g2)
     size_t V2 = g2.vertex_num;
     size_t i, j;
     size_t count_i = 0, count_j = 0;
+    bool flag;
+
+    if(g1.if_directed != g2.if_directed)
+        throw invalid_argument("Invalid graphs: The graphs are not both directed/undirected.");  
 
     if(V1 != V2)
     {
         for(i = 0; i < V2; i++)
         {
-            if(i + V1 > V2)
+            if(count_i + V1 > V2)
                 break;
 
             for(j = 0; j < V2; j++)
             {
-                if(j + V1 > V2)
+                if(count_j + V1 > V2)
                     break;
 
                 if(g1.graph[count_i][count_j] == g2.graph[i][j])
@@ -370,15 +385,22 @@ bool ariel::operator<(Graph& g1, Graph& g2)
                     if(count_i == V1 && count_j == V1)
                         return true;
                     
-                    count_i++;
                     count_j++;
+                    flag = true;
                 }
 
                 else
                 {
                     count_i = 0;
                     count_j = 0;
+                    flag = false;
                 }
+            }
+
+            if(flag)
+            {
+                count_i++;
+                count_j = 0;
             }
         }
     }
@@ -408,6 +430,21 @@ void ariel::operator++(Graph& g1)
         for(j = 0; j < V; j++)
         {
             if(i != j)
+                ++g1.graph[i][j];
+        }
+    }
+}
+
+//
+void ariel::operator++(Graph& g1, int n)
+{
+    size_t i, j, V = g1.vertex_num;
+
+    for(i = 0; i < V; i++)
+    {
+        for(j = 0; j < V; j++)
+        {
+            if(i != j)
                 g1.graph[i][j]++;
         }
     }
@@ -415,6 +452,21 @@ void ariel::operator++(Graph& g1)
 
 //
 void ariel::operator--(Graph& g1)
+{
+    size_t i, j, V = g1.vertex_num;
+
+    for(i = 0; i < V; i++)
+    {
+        for(j = 0; j < V; j++)
+        {
+            if(i != j)
+                --g1.graph[i][j];
+        }
+    }
+}
+
+//
+void ariel::operator--(Graph& g1, int n)
 {
     size_t i, j, V = g1.vertex_num;
 

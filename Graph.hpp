@@ -47,7 +47,9 @@ namespace ariel {
 
                 // Other operators
                 friend void operator++(Graph& g1);
+                friend void operator++(Graph& g1, int n);
                 friend void operator--(Graph& g1);
+                friend void operator--(Graph& g1, int n);
                 friend void operator*(Graph& g1, int num);
                 friend Graph& operator*(Graph& g1, Graph& g2);
                 friend ostream& operator<<(ostream& os, Graph& g1);
