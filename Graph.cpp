@@ -48,7 +48,7 @@ void Graph::loadGraph(vector<vector<int>> new_graph, int directed = 0) { // If w
         edge_num = count;
 }
 
-// Prints the number of vertices and the number of edges
+// I changed this function to print the graph
 string Graph::printGraph() {
 
     size_t i, j, V = vertex_num;
@@ -99,7 +99,7 @@ int Graph::getIfDirected()
 
 // Mathematical operators
 
-//
+// Returns a graph that represents the addition between g1 and g2
 Graph& ariel::operator+(Graph& g1, Graph& g2)
 {
     size_t V1 = g1.vertex_num;
@@ -129,13 +129,13 @@ Graph& ariel::operator+(Graph& g1, Graph& g2)
     return g3;
 }
 
-//
+// Unary plus (does nothing)
 void ariel::operator+(Graph& g1)
 {
     return;
 }
 
-//
+// Returns a graph that represents the substraction between g1 and g2
 Graph& ariel::operator-(Graph& g1, Graph& g2)
 {
     size_t V1 = g1.vertex_num;
@@ -165,7 +165,7 @@ Graph& ariel::operator-(Graph& g1, Graph& g2)
     return g3;
 }
 
-//
+// Unary minus
 void ariel::operator-(Graph& g1)
 {
     size_t i, j, V = g1.vertex_num;
@@ -179,7 +179,7 @@ void ariel::operator-(Graph& g1)
     }
 }
 
-//
+// Adds the values in g2 to g1
 void ariel::operator+=(Graph& g1, Graph& g2)
 {
     size_t V1 = g1.vertex_num;
@@ -202,7 +202,7 @@ void ariel::operator+=(Graph& g1, Graph& g2)
     }
 }
 
-//
+// Substract the values of g2 from g1
 void ariel::operator-=(Graph& g1, Graph& g2)
 {
     size_t V1 = g1.vertex_num;
@@ -228,7 +228,7 @@ void ariel::operator-=(Graph& g1, Graph& g2)
 
 // Comperation operators
 
-//
+// Return true if g1 equals to g2 or, g1 !> g2 and g1 !< g2
 bool ariel::operator==(Graph& g1, Graph& g2)
 {
     size_t V1 = g1.vertex_num;
@@ -241,7 +241,7 @@ bool ariel::operator==(Graph& g1, Graph& g2)
 
     if(V1 == V2)
     {
-        bool flag = true;
+        bool flag = true; // to know if we found a cell that is not equal
 
         for(i = 0; i < V1; i++)
         {
@@ -268,7 +268,7 @@ bool ariel::operator==(Graph& g1, Graph& g2)
     return false;
 }
 
-//
+// Returns the oposite from the == function
 bool ariel::operator!=(Graph& g1, Graph& g2)
 {
     if(g1 == g2)
@@ -277,7 +277,7 @@ bool ariel::operator!=(Graph& g1, Graph& g2)
     return true;
 }
 
-//
+// Returns true if g1 == g2 or g1 > g2
 bool ariel::operator>=(Graph& g1, Graph& g2)
 {
     if(g1 == g2 || g1 > g2)
@@ -286,7 +286,7 @@ bool ariel::operator>=(Graph& g1, Graph& g2)
     return false;
 }
 
-//
+// Returns true if g1 contains g2, or g1 has more edges, or (if edge num is equal) g1 has more vertices
 bool ariel::operator>(Graph& g1, Graph& g2)
 {
     size_t V1 = g1.vertex_num;
@@ -298,16 +298,16 @@ bool ariel::operator>(Graph& g1, Graph& g2)
     if(g1.if_directed != g2.if_directed)
         throw invalid_argument("Invalid graphs: The graphs are not both directed/undirected.");  
 
-    if(V1 != V2)
+    if(V1 != V2) // g1 can't contain g2 if they have the same vertex number
     {
         for(i = 0; i < V1; i++)
         {
-            if(count_i + V2 > V1)
+            if(count_i + V2 > V1) // it is not possible that g1 contains g2
                 break;
 
             for(j = 0; j < V1; j++)
             {
-                if(count_j + V2 > V1)
+                if(count_j + V2 > V1) // we need to start over from the next row
                     break;
 
                 if(g2.graph[count_i][count_j] == g1.graph[i][j])
@@ -335,6 +335,7 @@ bool ariel::operator>(Graph& g1, Graph& g2)
         }
     }
 
+    // If g1 doesn't contain g2
     if(g1.edge_num > g2.edge_num)
         return true;
 
@@ -347,7 +348,7 @@ bool ariel::operator>(Graph& g1, Graph& g2)
     return false;
 }
 
-//
+// Returns true if g1 == g2 or g1 < g2
 bool ariel::operator<=(Graph& g1, Graph& g2)
 {
     if(g1 == g2 || g1 < g2)
@@ -356,7 +357,7 @@ bool ariel::operator<=(Graph& g1, Graph& g2)
     return false;
 }
 
-//
+// Returns true if g2 contains g1, or g2 has more edges, or (if edge num is equal) g2 has more vertices
 bool ariel::operator<(Graph& g1, Graph& g2)
 {
     size_t V1 = g1.vertex_num;
@@ -368,16 +369,16 @@ bool ariel::operator<(Graph& g1, Graph& g2)
     if(g1.if_directed != g2.if_directed)
         throw invalid_argument("Invalid graphs: The graphs are not both directed/undirected.");  
 
-    if(V1 != V2)
+    if(V1 != V2) // g2 can't contain g1 if they have the same vertex number
     {
         for(i = 0; i < V2; i++)
         {
-            if(count_i + V1 > V2)
+            if(count_i + V1 > V2) // it is not possible that g2 contains g1
                 break;
 
             for(j = 0; j < V2; j++)
             {
-                if(count_j + V1 > V2)
+                if(count_j + V1 > V2) // we need to start over from the next row
                     break;
 
                 if(g1.graph[count_i][count_j] == g2.graph[i][j])
@@ -405,6 +406,7 @@ bool ariel::operator<(Graph& g1, Graph& g2)
         }
     }
 
+    // If g2 doesn't contain g1
     if(g1.edge_num < g2.edge_num)
         return true;
 
@@ -420,7 +422,7 @@ bool ariel::operator<(Graph& g1, Graph& g2)
 
 // Other operators
 
-//
+// Adds 1 to every cell that is not in the primery diagonal (++x)
 void ariel::operator++(Graph& g1)
 {
     size_t i, j, V = g1.vertex_num;
@@ -435,7 +437,7 @@ void ariel::operator++(Graph& g1)
     }
 }
 
-//
+// Adds 1 to every cell that is not in the primery diagonal (x++)
 void ariel::operator++(Graph& g1, int n)
 {
     size_t i, j, V = g1.vertex_num;
@@ -450,7 +452,7 @@ void ariel::operator++(Graph& g1, int n)
     }
 }
 
-//
+// Substract 1 from every cell that is not in the primery diagonal (--x)
 void ariel::operator--(Graph& g1)
 {
     size_t i, j, V = g1.vertex_num;
@@ -465,7 +467,7 @@ void ariel::operator--(Graph& g1)
     }
 }
 
-//
+// Substract 1 from every cell that is not in the primery diagonal (x--)
 void ariel::operator--(Graph& g1, int n)
 {
     size_t i, j, V = g1.vertex_num;
@@ -480,21 +482,7 @@ void ariel::operator--(Graph& g1, int n)
     }
 }
 
-//
-void ariel::operator*(Graph& g1, int num)
-{
-    size_t i, j, V = g1.vertex_num;
-
-    for(i = 0; i < V; i++)
-    {
-        for(j = 0; j < V; j++)
-        {
-            g1.graph[i][j] *= num;
-        }
-    }
-}
-
-//
+// Returns a graph that represents the multiplication between g1 and g2
 Graph& ariel::operator*(Graph& g1, Graph& g2)
 {
     size_t V1 = g1.vertex_num;
@@ -530,7 +518,40 @@ Graph& ariel::operator*(Graph& g1, Graph& g2)
     return g3;
 }
 
-//
+// Multiply every cell by num
+void ariel::operator*=(Graph& g1, int num)
+{
+    size_t i, j, V = g1.vertex_num;
+
+    for(i = 0; i < V; i++)
+    {
+        for(j = 0; j < V; j++)
+        {
+            if(i != j)
+                g1.graph[i][j] *= num;
+        }
+    }
+}
+
+// Divide every cell by num
+void ariel::operator/=(Graph& g1, int num)
+{
+    if(num == 0)
+        throw invalid_argument("Invalid num: We can't divide by 0.");
+
+    size_t i, j, V = g1.vertex_num;
+
+    for(i = 0; i < V; i++)
+    {
+        for(j = 0; j < V; j++)
+        {
+            if(i != j)
+                g1.graph[i][j] /= num;
+        }
+    }
+}
+
+// Prints g1 with cout << g1
 ostream& ariel::operator<<(ostream& os, Graph& g1)
 {
     size_t i, j, V = g1.vertex_num;

@@ -15,7 +15,7 @@ TEST_CASE("Test graph addition")
         {0, 1, 0}};
     g1.loadGraph(graph, 0);
 
-    +g1; // Onary plus
+    +g1; // Unary plus
     CHECK(g1.printGraph() == "[0, 1, 0]\n[1, 0, 1]\n[0, 1, 0]");
     
     ariel::Graph g2;
@@ -53,7 +53,7 @@ TEST_CASE("Test graph addition")
         {0, 4, 0}};
     g5.loadGraph(graph5, 1);
 
-    +g5; // Onary plus
+    +g5; // Unary plus
     CHECK(g5.printGraph() == "[0, 1, -6]\n[1, 0, 0]\n[0, 4, 0]");
 
     ariel::Graph g6 = g4 + g5; // +
@@ -74,7 +74,7 @@ TEST_CASE("Test graph substraction")
         {5, 2, 0}};
     g1.loadGraph(graph1, 0);
 
-    -g1; // Onary minus
+    -g1; // Unary minus
     CHECK(g1.printGraph() == "[0, -1, -5]\n[-1, 0, -2]\n[-5, -2, 0]");
     -g1; // Return to the before state
 
@@ -113,7 +113,7 @@ TEST_CASE("Test graph substraction")
         {0, 4, 0}};
     g5.loadGraph(graph5, 1);
 
-    -g5; // Onary minus
+    -g5; // Unary minus
     CHECK(g5.printGraph() == "[0, -1, 6]\n[-1, 0, 0]\n[0, -4, 0]");
     -g5; // Return to the before state
     
@@ -336,7 +336,7 @@ TEST_CASE("Test ++ and --")
     CHECK(g2.printGraph() == "[0, 1, 0]\n[-4, 0, 2]\n[3, 0, 0]");
 }
 
-TEST_CASE("Test graph multiplication")
+TEST_CASE("Test graph multiplication and division")
 {
     // Undirected
 
@@ -361,8 +361,10 @@ TEST_CASE("Test graph multiplication")
         {1, 0, 0}};
     CHECK(g3.printGraph() == "[0, 0, 2]\n[1, 0, 1]\n[1, 0, 0]");
 
-    g1 * 2;
+    g1 *= 2;
     CHECK(g1.printGraph() == "[0, 2, 0]\n[2, 0, 2]\n[0, 2, 0]");
+    g1 /= 2;
+    CHECK(g1.printGraph() == "[0, 1, 0]\n[1, 0, 1]\n[0, 1, 0]");
 
 
     // Directed
@@ -384,31 +386,33 @@ TEST_CASE("Test graph multiplication")
     ariel::Graph g6 = g4 * g5;
     CHECK(g6.printGraph() == "[0, -3, 0]\n[8, 0, 0]\n[0, 0, 0]");
 
-    g4 * -3;
+    g4 *= -3;
     CHECK(g4.printGraph() == "[0, 0, 9]\n[3, 0, -12]\n[0, -15, 0]");
+    g4 /= 3;
+    CHECK(g4.printGraph() == "[0, 0, 3]\n[1, 0, -4]\n[0, -5, 0]");
 }
 
-TEST_CASE("Test print")
-{
-    ariel::Graph g1;
-    vector<vector<int>> graph1 = {
-        {0, 1, 0},
-        {1, 0, 1},
-        {0, 1, 0}};
-    g1.loadGraph(graph1, 0);
+// TEST_CASE("Test print")
+// {
+//     ariel::Graph g1;
+//     vector<vector<int>> graph1 = {
+//         {0, 1, 0},
+//         {1, 0, 1},
+//         {0, 1, 0}};
+//     g1.loadGraph(graph1, 0);
 
-    ariel::Graph g2;
-    vector<vector<int>> graph2 = {
-        {0, -5, 3},
-        {1, 0, 0},
-        {0, -3, 0}};
-    g2.loadGraph(graph2, 1);
+//     ariel::Graph g2;
+//     vector<vector<int>> graph2 = {
+//         {0, -5, 3},
+//         {1, 0, 0},
+//         {0, -3, 0}};
+//     g2.loadGraph(graph2, 1);
 
-    // Works
-    // cout << g1;
-    // cout << endl;
-    // cout << g2;
-}
+//     // Works
+//     cout << g1;
+//     cout << endl;
+//     cout << g2;
+// }
 
 TEST_CASE("Invalid operations")
 {
