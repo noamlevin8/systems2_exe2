@@ -477,6 +477,10 @@ TEST_CASE("Invalid operations")
     //CHECK_THROWS(g4 > g5); // Comparison of directed and undirected graphs
 }
 
+
+// I will show in this tests that I did not need to change any of the functions in 
+// the Algorithms file because I am only changing the valus of the graphs and 
+// then the functions perform the exact same operation without any problems 
 TEST_CASE("Test isConnected")
 {
     ariel::Graph g1;
@@ -519,10 +523,6 @@ TEST_CASE("Test isConnected")
 
 }
 
-
-// I will show in this tests that I did not need to change any of the functions in 
-// the Algorithms file because I am only changing the valus of the graphs and 
-// then the functions perform the exact same operation without any problems 
 TEST_CASE("Test shortest path")
 {
     ariel::Graph g1;
