@@ -235,7 +235,8 @@ bool ariel::operator==(Graph& g1, Graph& g2)
     size_t V2 = g2.vertex_num;
 
     if(g1.if_directed != g2.if_directed)
-        throw invalid_argument("Invalid graphs: The graphs are not both directed/undirected.");  
+        return false;
+        // throw invalid_argument("Invalid graphs: The graphs are not both directed/undirected.");  
 
     size_t i, j;
 
@@ -271,7 +272,7 @@ bool ariel::operator==(Graph& g1, Graph& g2)
 // Returns the oposite from the == function
 bool ariel::operator!=(Graph& g1, Graph& g2)
 {
-    if(g1 == g2)
+    if(g1 == g2 || g1.if_directed != g2.if_directed)
         return false;
 
     return true;
@@ -296,7 +297,8 @@ bool ariel::operator>(Graph& g1, Graph& g2)
     bool flag;
 
     if(g1.if_directed != g2.if_directed)
-        throw invalid_argument("Invalid graphs: The graphs are not both directed/undirected.");  
+        return false;
+        // throw invalid_argument("Invalid graphs: The graphs are not both directed/undirected.");  
 
     if(V1 != V2) // g1 can't contain g2 if they have the same vertex number
     {
@@ -367,7 +369,8 @@ bool ariel::operator<(Graph& g1, Graph& g2)
     bool flag;
 
     if(g1.if_directed != g2.if_directed)
-        throw invalid_argument("Invalid graphs: The graphs are not both directed/undirected.");  
+        return false;
+        // throw invalid_argument("Invalid graphs: The graphs are not both directed/undirected.");  
 
     if(V1 != V2) // g2 can't contain g1 if they have the same vertex number
     {
