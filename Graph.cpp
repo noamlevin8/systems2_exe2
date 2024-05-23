@@ -130,9 +130,9 @@ Graph& ariel::operator+(Graph& g1, Graph& g2)
 }
 
 // Unary plus (does nothing)
-void ariel::operator+(Graph& g1)
+Graph& ariel::operator+(Graph& g1)
 {
-    return;
+    return g1;
 }
 
 // Returns a graph that represents the substraction between g1 and g2
@@ -166,17 +166,23 @@ Graph& ariel::operator-(Graph& g1, Graph& g2)
 }
 
 // Unary minus
-void ariel::operator-(Graph& g1)
+Graph& ariel::operator-(Graph& g1)
 {
+    static Graph g2;
+    vector<vector<int>> new_graph(g1.vertex_num, vector<int>(g1.vertex_num, 0));
+    
     size_t i, j, V = g1.vertex_num;
 
     for(i = 0; i < V; i++)
     {
         for(j = 0; j < V; j++)
         {
-            g1.graph[i][j] *= -1;
+            new_graph[i][j] = g1.graph[i][j] * -1;
         }
     }
+
+    g2.loadGraph(new_graph, g1.if_directed);
+    return g2;
 }
 
 // Adds the values in g2 to g1

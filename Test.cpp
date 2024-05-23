@@ -18,8 +18,8 @@ TEST_CASE("Test graph addition")
         {0, 1, 0}};
     g1.loadGraph(graph, 0);
 
-    +g1; // Unary plus
-    CHECK(g1.printGraph() == "[0, 1, 0]\n[1, 0, 1]\n[0, 1, 0]");
+    ariel::Graph g7 = +g1; // Unary plus
+    CHECK(g7.printGraph() == "[0, 1, 0]\n[1, 0, 1]\n[0, 1, 0]");
     
     ariel::Graph g2;
     vector<vector<int>> weightedGraph = {
@@ -28,7 +28,7 @@ TEST_CASE("Test graph addition")
         {1, 2, 0}};
     g2.loadGraph(weightedGraph, 0);
 
-    ariel::Graph g3 = g1 + g2; // +
+    ariel::Graph g3 = g7 + g2; // +
 
     vector<vector<int>> expectedGraph = {
         {0, 2, 1},
@@ -56,14 +56,14 @@ TEST_CASE("Test graph addition")
         {0, 4, 0}};
     g5.loadGraph(graph5, 1);
 
-    +g5; // Unary plus
-    CHECK(g5.printGraph() == "[0, 1, -6]\n[1, 0, 0]\n[0, 4, 0]");
+    ariel::Graph g8 = +g5; // Unary plus
+    CHECK(g8.printGraph() == "[0, 1, -6]\n[1, 0, 0]\n[0, 4, 0]");
 
-    ariel::Graph g6 = g4 + g5; // +
+    ariel::Graph g6 = g4 + g8; // +
     CHECK(g6.printGraph() == "[0, 4, -5]\n[2, 0, 2]\n[0, 6, 0]");
 
-    g5 += g4; // +=
-    CHECK(g5.printGraph() == "[0, 4, -5]\n[2, 0, 2]\n[0, 6, 0]");
+    g8 += g4; // +=
+    CHECK(g8.printGraph() == "[0, 4, -5]\n[2, 0, 2]\n[0, 6, 0]");
 }
 
 TEST_CASE("Test graph substraction")
@@ -77,9 +77,8 @@ TEST_CASE("Test graph substraction")
         {5, 2, 0}};
     g1.loadGraph(graph1, 0);
 
-    -g1; // Unary minus
-    CHECK(g1.printGraph() == "[0, -1, -5]\n[-1, 0, -2]\n[-5, -2, 0]");
-    -g1; // Return to the before state
+    ariel::Graph g7 = -g1; // Unary minus
+    CHECK(g7.printGraph() == "[0, -1, -5]\n[-1, 0, -2]\n[-5, -2, 0]");
 
     ariel::Graph g2;
     vector<vector<int>> graph2 = {
@@ -116,9 +115,8 @@ TEST_CASE("Test graph substraction")
         {0, 4, 0}};
     g5.loadGraph(graph5, 1);
 
-    -g5; // Unary minus
-    CHECK(g5.printGraph() == "[0, -1, 6]\n[-1, 0, 0]\n[0, -4, 0]");
-    -g5; // Return to the before state
+    ariel::Graph g8 = -g5; // Unary minus
+    CHECK(g8.printGraph() == "[0, -1, 6]\n[-1, 0, 0]\n[0, -4, 0]");
     
     ariel::Graph g6 = g5 - g4; // -
     CHECK(g6.printGraph() == "[0, -2, -7]\n[0, 0, -2]\n[0, 2, 0]");

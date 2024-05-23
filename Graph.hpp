@@ -31,9 +31,9 @@ namespace ariel {
 
                 // Mathematical operators
                 friend Graph& operator+(Graph& g1, Graph& g2); // Returns a graph that represents the addition between g1 and g2
-                friend void operator+(Graph& g1); // Unary plus (does nothing)
+                friend Graph& operator+(Graph& g1); // Unary plus (does nothing)
                 friend Graph& operator-(Graph& g1, Graph& g2); // Returns a graph that represents the substraction between g1 and g2
-                friend void operator-(Graph& g1); // Unary minus
+                friend Graph& operator-(Graph& g1); // Unary minus
                 friend void operator+=(Graph& g1, Graph& g2); // Adds the values in g2 to g1
                 friend void operator-=(Graph& g1, Graph& g2); // Substract the values of g2 from g1
 
